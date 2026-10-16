@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+  </head>
+  <body>
+
+    <div id="loader-overlay" class="loader-overlay hidden" role="status" aria-hidden="true">
+      <div class="loader-card">
+        <div class="spinner-wrap">
+          <div class="spinner-track"></div>
+          <div class="spinner-arc animate-spin" aria-hidden="true"></div>
+        </div>
+        <div class="loader-text-wrap">
+          <p id="loader-text" class="loader-text">Loading record...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" role="dialog" aria-labelledby="heading" aria-modal="true">
+      <div class="card-accent-bar"></div>
+
+      <div class="notice-box">
+        <div class="notice-icon" aria-hidden="true">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="notice-text-wrap">
+          <strong class="notice-heading">Justification Required: TLZ Professional Fee</strong>
+          <p class="notice-text" id="instruction-text">
+            We noticed that the quotation associated with this prospect does not include the TLZ Professional Fee, as required under company policy.
+          </p>
+          <p class="notice-text">
+            Please provide a clear explanation in the section below justifying why the quotation was processed without this fee.
+          </p>
+        </div>
+      </div>
+
+      <div class="notes-section">
+        <label for="notesInput" class="notes-label-row">
+          <span class="notes-label-left">
+            <span class="notes-dot"></span>
+            <span id="heading">Reason for Excluding the TLZ Professional Fee</span>
+            <span class="notes-asterisk">*</span>
+          </span>
+          <span class="mandatory-badge">Required</span>
+        </label>
+
+        <textarea id="notesInput" rows="4" maxlength="1990" placeholder="Explain why the TLZ Professional Fee cannot be added to this quotation..." oninput="clearNotesError()" aria-required="true"></textarea>
+
+        <span id="error-msg" class="error-msg hidden" role="alert" aria-live="assertive">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span class="error-text">A reason is required before submitting.</span>
+        </span>
+
+      </div>
+
+      <div class="btn-row">
+        <button onclick="openQuote()" class="btn btn-secondary" type="button" aria-label="Open Quote in a new tab">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          Open Quote
+        </button>
+        <button onclick="submitQuote()" class="btn btn-primary" type="button" aria-label="Submit reason">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          Submit Reason
+        </button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" style="display:none;" role="status" aria-live="polite" aria-atomic="true">
+      <div id="toastIcon" class="toast-icon" aria-hidden="true">
+        <svg style="height: 22px; width: 22px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div class="toast-text">
+        <h4 id="toastTitle" class="toast-title"></h4>
+        <p id="toastMessage" class="toast-message"></p>
+      </div>
+    </div>
+
+    <div class="popup-overlay hidden" id="popup" data-status="" role="dialog" aria-modal="true" aria-live="assertive">
+      <div class="popup-card animate-slide-up">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <h3 id="popupTitle" class="popup-title">Notification</h3>
+        <p id="popupMessage" class="popup-message"></p>
+        <button type="button" class="popup-close-btn" onclick="document.getElementById('popup').classList.add('hidden')">Close</button>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
